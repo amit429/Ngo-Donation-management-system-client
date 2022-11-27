@@ -1,0 +1,42 @@
+.navbar_main{
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.nav-text{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+.navbar{
+    display: flex;
+    margin-left: 23%;   
+}
+
+.nav-box{
+    padding: auto;
+    background-color: white;
+}
+
+.nav-box:hover{
+    transition: 0.5s;
+    transform: translateY(-5px);
+    background-color: #774360;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .nav-text{
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .navbar{
+        margin-left: 18%;
+    }
+}
