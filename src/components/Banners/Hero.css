@@ -27,3 +27,23 @@
     margin-top: -3%;
     margin-right: 5%;
 }
+
+.animation{
+    width: 50vw;
+    height: 65vh;
+    object-fit: contain;
+}
+
+@media screen and (max-width: 768px) {
+    .animation{
+        width: 50vw;
+        height: 60vh;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .animation{
+        width: 70vw;
+        height: 50vh;
+    }
+}

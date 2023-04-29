@@ -5,6 +5,7 @@ import Hero from '../components/Banners/Hero'
 import Highlights from '../components/Banners/Highlights'
 import Navbar from '../components/Navbar/Navbar'
 import Stats from '../components/Statistics/Stats'
+import ngo_mainpage from '../assets/ngo_mainpage.gif'
 import Ngo, { FavNgo } from './Ngo'
 import { useNavigate } from 'react-router-dom'
 
@@ -27,7 +28,7 @@ export default function Landing() {
       });
 
       const data = await res.json();
-      console.log(data);
+      //console.log(data);
       setLoggedIn(true);
 
       if(!res.status === 200){
@@ -49,7 +50,10 @@ export default function Landing() {
   return (
     <>
         <Navbar/>
-        <Hero/>
+        <Hero
+          gif={ngo_mainpage}
+          text="Donate to the Needy"
+        />
         <About/>
         <Stats/>
         <Highlights/>

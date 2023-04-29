@@ -12,6 +12,7 @@ import {
     TableContainer,
   } from "@chakra-ui/react"
   import { useNavigate } from 'react-router-dom'
+import Navbar from '../Navbar/Navbar';
 
 
 export default function DonerdonationTable() {
@@ -80,6 +81,7 @@ export default function DonerdonationTable() {
     
   return (
     <>
+        <Navbar/>
         <Box style={{
             display: 'flex',
             justifyContent: 'center',
@@ -93,7 +95,7 @@ export default function DonerdonationTable() {
 
         <Box className='donations_table'
             style={{
-                maxWidth: '80%',
+                maxWidth: '85%',
                 margin: 'auto',
                 padding: '20px',
                 marginTop: '1%',
@@ -117,11 +119,14 @@ export default function DonerdonationTable() {
                     <Th>Donated NGO</Th>
                     <Th>Transaction ID</Th>
                     <Th isNumeric>Donated Amount</Th>
+                    <Th>Date</Th>
                 </Tr>
                 </Thead>
                 <Tbody>
                   {donationList.map((donation) => {
                     if(donation.email === email){
+                      //slice the date and time
+                      donation.date = donation.date.slice(0,10);
                       return(
                         <Tr>
                           <Td>{user}</Td>
@@ -130,6 +135,7 @@ export default function DonerdonationTable() {
                           <Td>{donation.organization}</Td>
                           <Td>{donation._id}</Td>
                           <Td isNumeric>{donation.donated}</Td>
+                          <Td>{donation.date}</Td>
                         </Tr>
                       )
                     }

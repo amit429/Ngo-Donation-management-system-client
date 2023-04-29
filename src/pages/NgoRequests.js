@@ -24,11 +24,13 @@ import {
     Select,
   } from '@chakra-ui/react';
   import { useState , useEffect } from 'react';
+  import { useNavigate } from 'react-router-dom';
 
 export default function NgoRequests() {
 
     const {isOpen , onOpen , onClose} = useDisclosure();
     const initialRef = React.useRef(null);
+    const navigate = useNavigate();
 
     const [name, setName] = useState("");
     const [org_name, setOrgName] = useState("");
@@ -52,10 +54,16 @@ export default function NgoRequests() {
     
           const data = await res.json();
           //console.log(data.email);
+          if(!res.status === 200){
+            const error = new Error(res.error);
+            throw error;
+          }
           setOrgName(data.name);
     
         } catch (err) {
           console.log(err);
+          window.alert("Please Login to continue");
+          navigate("/ngo_login");
         }
     }
 
