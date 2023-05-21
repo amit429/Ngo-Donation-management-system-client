@@ -28,6 +28,8 @@ import {
   import { useState } from 'react';
   import { useNavigate } from 'react-router-dom';
   import ngo_img from '../../assets/ngo-img.jpg'
+  import logo from '../../assets/logo.png'
+  
 
 export default function NgoCard(props) {
 
@@ -35,10 +37,15 @@ export default function NgoCard(props) {
   const navigate = useNavigate();
   const [fullname, setFullname] = useState("")
   const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
   const [organization, setOrganization] = useState("")
   const [donated, setDonation] = useState("")
   const [ngoList, setNgoList] = useState([]);
   const initialRef = React.useRef(null);
+
+        console.log(email);
+      console.log(fullname);
+      console.log(phone);
 
   console.log(ngoList);
 
@@ -57,6 +64,8 @@ export default function NgoCard(props) {
       const data = await res.json();
       //console.log(data.email);
       setEmail(data.email);
+      setFullname(data.name);
+      setPhone(data.phone);
 
       if(!res.status === 200){
         const error = new Error(res.error);
@@ -68,7 +77,90 @@ export default function NgoCard(props) {
     }
   }
 
+  // handle razorpay payment
 
+  function loadScript(src) {
+    return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => {
+            resolve(true);
+        };
+        script.onerror = () => {
+            resolve(false);
+        };
+        document.body.appendChild(script);
+    });
+}
+
+  const displayRazorpay = async(name , email , phone)=> {
+
+    const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        return;
+    }
+
+    // creating a new order
+    const result = await fetch("/razorpay", {
+        method: "POST",
+    });
+
+    const data = await result.json();
+    if (!data) {
+        alert("Server error. Are you online?");
+        return;
+    }
+
+    // Getting the order details back
+    const { amount, id: order_id, currency } = data;
+
+    const options = {
+        key: "rzp_test_regQ3Jwb1ZlLrU", // Enter the Key ID generated from the Dashboard
+        amount: amount.toString(),
+        currency: currency,
+        name: "Helping-hands",
+        description: "Test Transaction",
+        image: { logo },
+        order_id: order_id,
+        handler: async function (response) {
+            const data = {
+                orderCreationId: order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpaySignature: response.razorpay_signature,
+            };
+
+            const result = await fetch("/success", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            const res = await result.json();
+            alert("Thank you for donating a very generous amount.");
+            navigate("/successfull_donation");
+        },
+        prefill: {
+            name: "Amit Pile",
+            email: "amit@gmail.com",
+            contact: "9822790187",
+        },
+        notes: {
+            address: "Helping Hands , Pune",
+        },
+        theme: {
+            color: "#61dafb",
+        },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+}
   const handleDonation = async (e) => {
 
     e.preventDefault();
@@ -177,7 +269,8 @@ export default function NgoCard(props) {
             _focus={{
               bg: 'gray.200',
             }}
-            onClick={onOpen}
+            // onClick={onOpen}
+            onClick={()=>displayRazorpay(fullname, email, phone)}
             >
             Donate Now
           </Button>

@@ -18,6 +18,7 @@ import NgoDonations from './components/Tables/NgoDonations';
 import NgoRequests from './pages/NgoRequests';
 import Requestview from './pages/Requestview';
 import DonerProfile from './pages/DonerProfile';
+import NgoEvents from './pages/NgoEvents';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
               <Route path="/ngo_requests" element={<NgoRequests/>} />
               <Route path="/requestview" element={<Requestview/>} />
               <Route path="/doner_profile" element={<DonerProfile/>} />
+              <Route path="/ngo_events" element={<NgoEvents/>} />
             </Routes>
         </BrowserRouter>
       </ChakraProvider>

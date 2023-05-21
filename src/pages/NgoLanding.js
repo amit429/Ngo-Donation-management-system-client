@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import NgoNavbar from '../components/Navbar/NgoNavbar';
 import Hero from '../components/Banners/Hero';
 import Footer from '../components/Banners/Footer';
+import ngo_mainpage from '../assets/ngo_mainpage.gif'
 
 export default function NgoLanding() {
 
@@ -41,7 +42,10 @@ export default function NgoLanding() {
   return (
     <>
         <NgoNavbar />
-        <Hero />
+        <Hero
+            gif={ngo_mainpage}
+            text="Donate to the Needy"
+        />
         <Footer />
     
     

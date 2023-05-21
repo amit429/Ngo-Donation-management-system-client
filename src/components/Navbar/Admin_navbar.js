@@ -42,7 +42,7 @@ export default function Admin_navbar() {
 
         {
             name: "All Donations",
-            link: "/"
+            link: "/doner_donation_table"
         },
 
         {

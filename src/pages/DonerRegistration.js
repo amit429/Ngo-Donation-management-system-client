@@ -122,6 +122,7 @@ export default function DonerRegistration() {
                     variant= "flushed"
                     value={email}
                     autoComplete="on"
+                    type='email'
                     onChange={(e) => setEmail(e.target.value)}
                 />
 
